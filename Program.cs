@@ -7,7 +7,7 @@ namespace ConsoleApp7
     class Program
     {
         static void Main(string[] args)
-        {            
+        {
             //List<int> startStatement = new List<int>();
             //string inputStatement = Console.ReadLine();
             //inputStatement = inputStatement.Replace(" ", "");
@@ -16,60 +16,52 @@ namespace ConsoleApp7
             //    startStatement.Add(int.Parse(item));
             //}
             //Console.WriteLine("Количество перемещений: "+ReRoll(startStatement));
-            Console.WriteLine("Количество перемещений: "+ReRoll(new List<int> { 6, 14, 22, 12, 6, 25, 15, 14, 29, 21, 11, 14, 25, 13, 13 }));
+            ReRoll(new List<int> { 6, 14, 22, 12, 6, 25, 15, 14, 29, 21, 11, 14, 25, 13, 13 });
+            Console.WriteLine("Количество перемещений: ");
             Console.ReadKey();
-            Console.WriteLine("Количество перемещений: "+ReRoll(new List<int> {18, 22, 30, 21, 2, 20, 22, 8, 30, 30, 7, 23, 1, 22, 8, 23, 7, 22, 25, 26, 17, 30, 27, 6, 25, 29, 20, 9, 3, 25, 16, 16, 30, 30, 8, 15, 27, 25, 6, 22, 16, 10, 24, 14, 26, 0, 13, 28, 11, 5
- }));
+            //Console.WriteLine("Количество перемещений: "+ReRoll(new List<int> {18, 22, 30, 21, 2, 20, 22, 8, 30, 30, 7, 23, 1, 22, 8, 23, 7, 22, 25, 26, 17, 30, 27, 6, 25, 29, 20, 9, 3, 25, 16, 16, 30, 30, 8, 15, 27, 25, 6, 22, 16, 10, 24, 14, 26, 0, 13, 28, 11, 5
+ //}));
             Console.ReadKey();
-            Console.WriteLine("Количество перемещений: " + ReRoll(new List<int> { 1, 5, 9, 10, 5 }));
+            //Console.WriteLine("Количество перемещений: " + ReRoll(new List<int> { 1, 5, 9, 10, 5 }));
         }
-        static int ReRoll(List<int> chipsOnSites)
+        static void  ReRoll(List<int> chipsOnSites)
         {
-            
-           // StateView(chipsOnSites);
-            //Console.Clear();
-            int countOfChanges = 0;
-            int average =(int)chipsOnSites.Average();
-            while (!chipsOnSites.All(x=>x==average))
+
+            int average = (int)chipsOnSites.Average(),
+                n= chipsOnSites.Count(x => x > average),
+                m= chipsOnSites.Count(x => x < average),
+                i=0,
+                j=0;
+            int[] storage = new int[n];
+            int[] store = new int[m];
+            int[,] ways = new int[n, m];
+            for (int z = 0; z < chipsOnSites.Count; z++)
             {
-                int indexOfTarget = chipsOnSites.IndexOf(chipsOnSites.Min());
-            //    StateViewModified(chipsOnSites, indexOfTarget);
-                int leftWeight=0, rightWeight=0;
-                var halfOfCycle = chipsOnSites.Count / 2;
-                for (int i = 1; i <=halfOfCycle; i++)
+                if (chipsOnSites[z]>average)
                 {
-                    int leftIndex=indexOfTarget-i<0?(chipsOnSites.Count-i+indexOfTarget):(indexOfTarget-i),
-                        rightIndex=indexOfTarget+i>=chipsOnSites.Count?(i-(chipsOnSites.Count-indexOfTarget)):(indexOfTarget+i);
-                    leftWeight += chipsOnSites[leftIndex];
-                    rightWeight += chipsOnSites[rightIndex];
-                }
-                for (int wave = 1; wave <=halfOfCycle; wave++)
-                {
-                    int leftIndex = indexOfTarget - wave < 0 ? (chipsOnSites.Count - wave + indexOfTarget) : (indexOfTarget - wave),
-                        rightIndex = indexOfTarget + wave >= chipsOnSites.Count ? (wave - (chipsOnSites.Count - indexOfTarget)) : (indexOfTarget + wave);
-                    if (rightWeight>leftWeight)
+                    storage[i] = chipsOnSites[z] - average;
+                    
+                    for (int x = 0; x < chipsOnSites.Count; x++)
                     {
-                        if (chipsOnSites[rightIndex]>average)
+                        if (chipsOnSites[x]<average)
                         {
-                            chipsOnSites[rightIndex]--;
-                            chipsOnSites[indexOfTarget]++;
-                            countOfChanges += wave;
-                            break;
+                            store[j] = average - chipsOnSites[x];
                         }
                     }
-                    else if (chipsOnSites[leftIndex]>average)
-                    {
-                        chipsOnSites[leftIndex]--;
-                        chipsOnSites[indexOfTarget]++;
-                        countOfChanges += wave;
-                        break;
-                    }
-
+                    i++;
                 }
             }
-            Console.WriteLine("Итоговое состояние");
-            StateView(chipsOnSites);
-            return countOfChanges;
+
+           // StateView(chipsOnSites);
+          
+        }
+        int ShortestWayInCircle(int pos,int target,int size)
+        {
+            for (int wave = 0; wave <= size/2; wave++)
+            {
+
+            }
+            return;
         }
         static void StateViewModified(List<int> statements,int pos)
         {
